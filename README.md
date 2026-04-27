@@ -78,7 +78,7 @@ Hvis din hostingplatform understøtter environment variables, er det den sikrest
 
 ### GitHub Actions
 
-Ja, du kan godt deploye gennem GitHub Actions.
+Ja, du kan godt bruge GitHub Actions. Lige nu er workflowet sat op som CI, så det validerer koden ved push og pull request.
 
 Det sikre mønster er:
 
@@ -87,7 +87,7 @@ Det sikre mønster er:
 - send den videre som miljøvariabel kun på server-siden under deployment
 - lad aldrig nøglen komme ind i frontend-bundle eller offentlige logs
 
-Hvis du vil, kan jeg lave en konkret workflow-fil til den platform du vælger, fx Render, Railway, Fly.io eller en egen server via SSH.
+Hvis du senere vil have egentlig deployment via GitHub Actions, kan vi koble workflowet på en hostingplatform eller en server via SSH. Uden et hostingmål er den sikre default at holde det til CI.
 
 ## Bemærkning
 
