@@ -78,16 +78,29 @@ Hvis din hostingplatform understøtter environment variables, er det den sikrest
 
 ### GitHub Actions
 
-Ja, du kan godt bruge GitHub Actions. Lige nu er workflowet sat op som CI, så det validerer koden ved push og pull request.
+Ja, du kan godt bruge GitHub Actions. Lige nu er workflowet sat op som CI og som trigger til Render på `main`.
 
 Det sikre mønster er:
 
-- gem `OPENAI_API_KEY` som en GitHub Secret
-- lad workflowet læse den via `secrets.OPENAI_API_KEY`
-- send den videre som miljøvariabel kun på server-siden under deployment
-- lad aldrig nøglen komme ind i frontend-bundle eller offentlige logs
+- gem `RENDER_DEPLOY_HOOK_URL` som en GitHub Secret
+- lad workflowet bruge den til at trigge Render deploy
+- gem `OPENAI_API_KEY` som environment variable i Render-dashboardet
+- lad aldrig nøglen komme ind i frontend-bundle, GitHub Actions logs eller repoet
 
 Hvis du senere vil have egentlig deployment via GitHub Actions, kan vi koble workflowet på en hostingplatform eller en server via SSH. Uden et hostingmål er den sikre default at holde det til CI.
+
+### Render-opsætning
+
+Hvis du bruger Render, så gør sådan her:
+
+1. Opret en ny `Web Service` i Render og forbind dit GitHub-repo.
+2. Lad Render bruge `render.yaml` i repo-roden som servicebeskrivelse.
+3. Sæt `OPENAI_API_KEY` som en secret environment variable i Render-dashboardet.
+4. Opret en deploy hook i Render service settings.
+5. Gem deploy hook-URL'en som GitHub Secret med navnet `RENDER_DEPLOY_HOOK_URL`.
+6. Push til `main`, så kører GitHub Actions først CI og derefter trigger Render deploy.
+
+Render håndterer selv runtime-miljøet, og Node-webservices får en produktionstilpasset runtime med miljøvariabler som `NODE_ENV=production`. Din server binder nu korrekt til Render, fordi den bruger `0.0.0.0` når `RENDER` er sat.
 
 ## Bemærkning
 

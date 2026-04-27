@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: praktikvurdering
+    runtime: node
+    plan: starter
+    buildCommand: npm ci --ignore-scripts
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-5.4-mini
+      - key: OPENAI_REASONING_EFFORT
+        value: medium

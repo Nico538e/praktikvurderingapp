@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 loadDotEnv();
 
 const PORT = Number(process.env.PORT || 3000);
-const HOST = process.env.HOST || "127.0.0.1";
+const HOST = process.env.HOST || (process.env.RENDER ? "0.0.0.0" : "127.0.0.1");
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5.4-mini";
 const OPENAI_REASONING_EFFORT = process.env.OPENAI_REASONING_EFFORT || "medium";
